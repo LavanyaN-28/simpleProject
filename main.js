@@ -21,10 +21,18 @@ function addItem(e){
 
     //Create a new li
     var li=document.createElement('li')
+    //Create a new description
+    var desc=document.createElement('description')
+    var br=document.createElement('br')
+    var descValue=document.getElementById('description').value;
     //Class Name
     li.className='list-group-item'
+    desc.tagName="description"
     //Add text node with input value
     li.appendChild(document.createTextNode(newItem));
+    desc.appendChild(document.createTextNode(descValue));
+    li.appendChild(br)
+    li.appendChild(desc)
     //Create a delete button
     var deleteBtn=document.createElement('button');
     //Add class to delete button
@@ -52,3 +60,28 @@ function removeItem(e){
     }
 }
 
+//Filter event
+
+ var filter=document.getElementById('filter');
+
+ //create event
+ filter.addEventListener('keyup',filterItems);
+
+ //Filter items
+ function filterItems(e){
+    //convert text to lowercase
+    var text=e.target.value.toLowerCase();
+    var items = itemList.getElementsByTagName('li');
+    
+    //convert to an array
+    Array.from(items).forEach(function(item){
+        var itemName=item.firstChild.textContent
+        var desc=item.childNodes[2].textContent
+        if(itemName.toLowerCase().indexOf(text)!=-1 || desc.toLowerCase().indexOf(text)!=-1){
+            item.style.display='block'
+        }
+        else{
+            item.style.display='none'
+        }
+    });
+ }
